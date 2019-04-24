@@ -1,0 +1,23 @@
+{
+  "name": "n-utils",
+  "version": "1.0.0",
+  "description": "packged to provide any utility for destwofe npm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/destwofe/n-utils.git"
+  },
+  "keywords": [
+    "destwofe",
+    "utils"
+  ],
+  "author": "destwofe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/destwofe/n-utils/issues"
+  },
+  "homepage": "https://github.com/destwofe/n-utils#readme"
+}
