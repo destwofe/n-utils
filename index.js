@@ -69,10 +69,57 @@ const objectSplit = (arr) => {
   }
 }
 
+/**
+ * filter object have spacific keys
+ * @param {Array} arr - source array
+ * @param {Array} keys - expected key
+ * @param {Boolean} exact - exact match or not
+ * ([{a: '10', b: '20', c: '30'}, {a: '11', b: '22'}, {a: '12', b:'23'}], ['a', 'b']) -> [ { a: '11', b: '22' }, { a: '12', b: '23' } ]
+ * ([{a: '10', b: '20', c: '30'}, {a: '11', b: '22'}, {a: '12', b:'23'}], ['a', 'b', 'c']) -> [ { a: '10', b: '20', c: '30' } ]
+ * ([{a: '10', b: '20', c: '30'}, {a: '11', b: '22'}, {a: '12', b:'23'}], ['a', 'b'], false) -> [ [ { a: '10' }, { b: '20' } ], [ { a: '11' }, { b: '22' } ], [ { a: '12' }, { b: '23' } ] ]
+ * ([{a: '10', b: '20', c: '30'}, {a: '11', b: '22'}, {a: '12', b:'23'}], ['a', 'b', 'c'], false) -> [ [ { a: '10' }, { b: '20' }, { c: '30' } ], [ { a: '11' }, { b: '22' }, { c: undefined } ], [ { a: '12' }, { b: '23' }, { c: undefined } ] ]
+ */
+const objectFilter = (arr, keys, exact = true) => {
+  try {
+    if (!Array.isArray(arr)) return undefined;
+    if (arr.length === 0) return [];
+    if (!keys) return new Error('keys is required');
+
+    if (exact) return arr.filter((value) => arrayCompare(Object.keys(value), keys))
+    return arr.map((value) => keys.map(key => ({ [key]: value[key] })))
+  } catch (error) {
+    throw error;
+  }
+}
+
+/**
+ * random pick some value from array
+ * @param {Array} posible
+ */
+const arrayPickup = (posible) => posible[Math.floor(Math.random() * posible.length)];
+
+/**
+ * random pick key with weight value
+ * @param {Object} posible
+ */
+const posibilityPickup = (posible = { a: 1, b: 1, c: 2 }) => {
+  const populatedPosible = []
+  Object.keys(posible).forEach(key => {
+    const weight = posible[key];
+    for (let i = 0; i < weight; i++) {
+      populatedPosible.push(key);
+    }
+  });
+  return arrayPickup(populatedPosible)
+}
+
 module.exports = {
   getSafe,
   arrayCompare,
   getIPAddr,
   objectify,
   objectSplit,
+  objectFilter,
+  arrayPickup,
+  posibilityPickup,
 };
