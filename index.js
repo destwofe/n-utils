@@ -113,6 +113,47 @@ const posibilityPickup = (posible = { a: 1, b: 1, c: 2 }) => {
   return arrayPickup(populatedPosible)
 }
 
+/**
+ * parallel async with limit thread amount
+ * @param {[Function]} array - Array of async functions
+ * @param {Number} pSize - thread amount default is 10
+ */
+const parallel = async (array, pSize = 10) => {
+  const res = []
+  for (let i = 0; i < Math.ceil(array.length / pSize); i++) {
+    const start = i * pSize
+    const stop = (i + 1) * pSize > array.length ? array.length : (i + 1) * pSize
+    const asyncRes = []
+    for (let j = start; j < stop; j++) {
+      asyncRes.push(array[j]())
+    }
+    res.push(...(await Promise.all(asyncRes)))
+  }
+  return res
+}
+
+/**
+ * search string is exist
+ * @param {String} string
+ * @param {String} search
+ */
+export const stringSearch = (string = '', search = '') =>
+  string.toLocaleUpperCase().indexOf(search.toLocaleUpperCase()) !== -1;
+
+/**
+ * format number
+ * @param {Number} n
+ * @param {Number} f - floating point length
+ */
+export const formatNumber = (n, f = 0) =>
+  Number(n).toLocaleString('th', { maximumFractionDigits: f, minimumFractionDigits: f });
+
+/**
+ * get plus number prefix
+ * @param {Number} n
+ */
+export const getNumberPrefix = n => (n > 0 ? '+' : '');
+
 module.exports = {
   getSafe,
   arrayCompare,
@@ -122,4 +163,5 @@ module.exports = {
   objectFilter,
   arrayPickup,
   posibilityPickup,
+  parallel,
 };
