@@ -137,7 +137,7 @@ const parallel = async (array, pSize = 10) => {
  * @param {String} string
  * @param {String} search
  */
-export const stringSearch = (string = '', search = '') =>
+const stringSearch = (string = '', search = '') =>
   string.toLocaleUpperCase().indexOf(search.toLocaleUpperCase()) !== -1;
 
 /**
@@ -145,14 +145,14 @@ export const stringSearch = (string = '', search = '') =>
  * @param {Number} n
  * @param {Number} f - floating point length
  */
-export const formatNumber = (n, f = 0) =>
+const formatNumber = (n, f = 0) =>
   Number(n).toLocaleString('th', { maximumFractionDigits: f, minimumFractionDigits: f });
 
 /**
  * get plus number prefix
  * @param {Number} n
  */
-export const getNumberPrefix = n => (n > 0 ? '+' : '');
+const getNumberPrefix = n => (n > 0 ? '+' : '');
 
 module.exports = {
   getSafe,
@@ -164,4 +164,7 @@ module.exports = {
   arrayPickup,
   posibilityPickup,
   parallel,
+  stringSearch,
+  formatNumber,
+  getNumberPrefix,
 };
