@@ -2,12 +2,13 @@
  * execute statement without program crash if statement crash will return undefined
  * `getSafe(() => look.up.too.deep.object)`
  * @param {function} fn function or statement to execute
+ * @param {Any} d default value if got an error
  */
-const getSafe = fn => {
+const getSafe = (fn, d = undefined) => {
   try {
     return fn();
   } catch (error) {
-    return undefined;
+    return d;
   }
 };
 
