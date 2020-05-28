@@ -1,6 +1,3 @@
-const fs = require('fs')
-const archiver = require('archiver')
-
 /**
  * execute statement without program crash if statement crash will return undefined
  * `getSafe(() => look.up.too.deep.object)`
@@ -14,6 +11,19 @@ const getSafe = (fn, d = undefined) => {
     return d;
   }
 };
+
+/**
+ * execute async statement without program crash if statement crash will return undefined
+ * @param {function} fn async function or statement to execute
+ * @param {Any} d default value if got an error
+ */
+const asyncSafe = async (fn, d = undefined) => {
+  try {
+    return await fn()
+  } catch (error) {
+    return d
+  }
+}
 
 /**
  * Compare two array
@@ -158,43 +168,9 @@ const formatNumber = (n, f = 0) =>
  */
 const getNumberPrefix = n => (n > 0 ? '+' : '');
 
-/**
- * archive files
- * @param {[String]} inputPaths 
- * @param {String} outputPath 
- */
-const archive = async (inputPaths, outputPath, isRMInput = false) => {
-  try {
-    const a = archiver('zip', {
-      zlib: { level: 9 } // Sets the compression level. 0 - 9, fast - compress
-    });
-    // const a = archiver('tar', { gzipOptions: { level: 9 } } )
-  
-    const output = fs.createWriteStream(outputPath)
-    a.pipe(output);
-  
-    // var file1 = __dirname + '/logs/2019-04-24.log';
-    // a.append(fs.createReadStream(file1), { name: '2019-04-24.log' });
-  
-    inputPaths.forEach(inputPath => {
-      a.append(fs.createReadStream(inputPath), { name: inputPath.split('/').pop() })
-    })
-
-    await a.finalize()
-    if (isRMInput) {
-      inputPaths.forEach(inputPath => {
-        fs.unlinkSync(inputPath)
-      })
-    }
-
-    return undefined
-  } catch (error) {
-    return error
-  }
-}
-
 module.exports = {
   getSafe,
+  asyncSafe,
   arrayCompare,
   getIPAddr,
   objectify,
@@ -206,5 +182,4 @@ module.exports = {
   stringSearch,
   formatNumber,
   getNumberPrefix,
-  archive,
 };

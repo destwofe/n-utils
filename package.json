@@ -1,6 +1,6 @@
 {
   "name": "@destwofe/n-utils",
-  "version": "1.1.5",
+  "version": "1.2.3",
   "description": "packged to provide any utility for destwofe npm",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,5 @@
   "bugs": {
     "url": "https://github.com/destwofe/n-utils/issues"
   },
-  "homepage": "https://github.com/destwofe/n-utils#readme",
-  "dependencies": {
-    "archiver": "^3.1.1"
-  }
+  "homepage": "https://github.com/destwofe/n-utils#readme"
 }
