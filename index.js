@@ -49,7 +49,7 @@ const getIPAddr = req => req.headers['x-forwarded-for'] || req.connection.remote
  * parse an error to json object
  * @param {Error} err javascript error
  */
-const objectify = err =>
+const objectify = (err = {}) =>
   err.message && err.name && err.stack
     ? { name: err.name, message: err.message, stack: err.stack, ...err }
     : err;
@@ -105,6 +105,25 @@ const objectFilter = (arr, keys, exact = true) => {
     throw error;
   }
 }
+
+const objectKeysCaster = (o, lower = false) => {
+  const newO = {}
+  const keys = Object.keys(o)
+  keys.forEach((key) => {
+    const value = typeof o[key] !== 'object' ? o[key] : objectKeysCasterHead(o[key], lower)
+    lower ? newO[key.toLowerCase()] = value : newO[key.toUpperCase()] = value
+  })
+  return newO
+}
+
+const objectKeysCasterHead = (o, lower = false) => {
+  if (typeof o !== 'object') throw new Error('parameter required as a object')
+  if (Array.isArray(o)) return o.map((a) => objectKeysCaster(a, lower))
+  return objectKeysCaster(o, lower)
+}
+
+const objectLowerKeys = (o) => objectKeysCasterHead(o, true)
+const objectUpperKeys = (o) => objectKeysCasterHead(o, false)
 
 /**
  * random pick some value from array
@@ -176,6 +195,8 @@ module.exports = {
   objectify,
   objectSplit,
   objectFilter,
+  objectLowerKeys,
+  objectUpperKeys,
   arrayPickup,
   posibilityPickup,
   parallel,
