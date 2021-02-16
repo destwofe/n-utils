@@ -110,7 +110,7 @@ const objectKeysCaster = (o, lower = false) => {
   const newO = {}
   const keys = Object.keys(o)
   keys.forEach((key) => {
-    const value = typeof o[key] !== 'object' ? o[key] : objectKeysCasterHead(o[key], lower)
+    const value = (typeof o[key] !== 'object'  || o[key] == null) ? o[key] : objectKeysCasterHead(o[key], lower)
     lower ? newO[key.toLowerCase()] = value : newO[key.toUpperCase()] = value
   })
   return newO
