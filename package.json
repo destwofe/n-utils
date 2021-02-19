@@ -1,6 +1,6 @@
 {
   "name": "@destwofe/n-utils",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "packged to provide any utility for destwofe npm",
   "main": "index.js",
   "scripts": {

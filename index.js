@@ -117,7 +117,8 @@ const objectKeysCaster = (o, lower = false) => {
 }
 
 const objectKeysCasterHead = (o, lower = false) => {
-  if (typeof o !== 'object') throw new Error('parameter required as a object')
+  if (o == null) return o
+  if (typeof o !== 'object') return o
   if (Array.isArray(o)) return o.map((a) => objectKeysCaster(a, lower))
   return objectKeysCaster(o, lower)
 }
