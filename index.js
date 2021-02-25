@@ -107,8 +107,9 @@ const objectFilter = (arr, keys, exact = true) => {
 }
 
 const objectKeysCaster = (o, lower = false) => {
-  const newO = {}
   const keys = Object.keys(o)
+  if (keys.length === 0) return o
+  const newO = {}
   keys.forEach((key) => {
     const value = (typeof o[key] !== 'object'  || o[key] == null) ? o[key] : objectKeysCasterHead(o[key], lower)
     lower ? newO[key.toLowerCase()] = value : newO[key.toUpperCase()] = value
