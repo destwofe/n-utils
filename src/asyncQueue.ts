@@ -21,7 +21,6 @@ export class AsyncQueue {
     if (fn == null) return
     this.Queue = remain
     this.res.push(await fn())
-    console.log('asyncQueue', n, this.res.length)
     if (this.Queue.length !== 0) return await this.execute(n)
   }
 }
