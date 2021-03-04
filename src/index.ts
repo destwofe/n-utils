@@ -1,8 +1,3 @@
-/**
- * execute statement without program crash if statement crash will return undefined
- * `getSafe(() => look.up.too.deep.object)`
- * @param fn function or statement to execute
- */
 export const getSafe = <T>(fn: () => T): T|undefined => {
   try {
     return fn()
@@ -84,7 +79,7 @@ export const posibilityPickup = (posible: Record<string, any>): any => {
  * @param array - Array of async functions
  * @param pSize - thread amount default is 10
  */
-export const parallel = async <T>(array: Array<() => T>, pSize: number = 10): Promise<T[]> => {
+export const parallel = async (array: Array<() => Promise<any>>, pSize: number = 10): Promise<any[]> => {
   const res = []
   for (let i = 0; i < Math.ceil(array.length / pSize); i++) {
     const start = i * pSize
@@ -92,9 +87,11 @@ export const parallel = async <T>(array: Array<() => T>, pSize: number = 10): Pr
     const asyncRes = []
     for (let j = start; j < stop; j++) {
       const fn = array[j]
-      if (fn != null) asyncRes.push(fn())
+      if (fn != null) asyncRes.push(await fn())
     }
     res.push(...(await Promise.all(asyncRes)))
   }
   return res
 }
+
+export { AsyncQueue } from './asyncQueue'

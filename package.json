@@ -1,6 +1,6 @@
 {
   "name": "@destwofe/n-utils",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "packged to provide any utility for destwofe npm",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,7 +23,9 @@
   },
   "homepage": "https://github.com/destwofe/n-utils#readme",
   "devDependencies": {
+    "@types/lodash.chunk": "^4.2.6",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "axios": "^0.21.1",
     "eslint": "^7.19.0",
     "eslint-config-standard-with-typescript": "^20.0.0",
     "eslint-plugin-import": "^2.22.1",
