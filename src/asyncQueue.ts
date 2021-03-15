@@ -1,13 +1,13 @@
-export class AsyncQueue {
-  Queue: Array<() => Promise<any>>
-  res: any[]
+export class AsyncQueue<T> {
+  Queue: Array<() => Promise<T>>
+  res: T[]
 
-  constructor (queue: Array<() => Promise<any>>) {
+  constructor (queue: Array<() => Promise<T>>) {
     this.Queue = queue
     this.res = []
   }
 
-  async Execute (pSize: number): Promise<any[]> {
+  async Execute (pSize: number): Promise<T[]> {
     const workers = []
     for (let index = 0; index < pSize; index++) {
       workers.push(this.execute(index))
